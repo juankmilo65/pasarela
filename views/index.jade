@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  -var centValue = 0;
+  h1= title
+  p Payment #{title}
+  br
+  div
+    //- script(src='/scripts/functions.js')
+     
+    input(type='number', name='amount', id='amount', onblur="setValue(this.value)" )
+    
+    form(form id='form1', action='/charge', method='post')
+      script.
+         function setValue(value) {
+          var form = document.getElementById("form1");
+          centValue = value * 100;
+          console.log(centValue);
+          document.getElementById('paymentButton').dataset.amount = centValue;
+          form.elements[1].value =  centValue;
+           console.log(form.elements.ammountName);
+          };
+
+          function getValue()
+          {
+            return centValue;
+          }
+      script( id='paymentButton', src='http://checkout.stripe.com/checkout.js'
+             class='stripe-button'
+             data-key='pk_test_wO6Jo2j6dI9YB2Hnc0TZSV89'
+             data-amount=0 
+             data-name='Payments'
+             data-description= 'This is the allowed payment method'
+             data-locale="auto"
+             data-currency="usd")
+      input(type='hidden', name='chargeAmount', id='showpass', value=0)
+      
+
+     
